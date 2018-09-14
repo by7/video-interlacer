@@ -1,0 +1,32 @@
+Benjamin Yang
+byang77@ucla.edu
+
+Interlacing++
+
+To build:
+cmake .
+make
+
+This builds the Interlacer executable, which takes two parameters
+./Interlacing <Path to Video 1> <Path to Video 2>
+
+Interlacing will output a video file 'output.avi' with the first frame of Video 1, followed by the first frame of 
+Video 2, alternating in sequence until either of the videos reach its end. When the program terminates, it prints
+out a line to standard output:
+{number of total frames},{width},{height}
+
+'output.avi' is in MPEG-4 format with the smallest dimensions that contain both videos and the framerate of twice
+the shorter video. This choice of framerate works well if both videos are of similar framerate, as it will keep 
+the same length as the shorter video. However if the framerate of the shorter video significantly higher, say 60 hz 
+vs. 24 hz, then due to lack of frames the output video will be shorter than the shorter of the two videos. 
+
+CMakeLists.txt		- instructions for cmake
+main.cpp		- contains the main routine for Interlacing
+DualVideoInput.h	- header and class definition for DualVideoInput, a two-threaded two-source alternating 
+			  VideoCapture class
+DualVideoInput.cpp	- function definition and implementation of DualVideoInput
+Semaphore.h		- header and class definition for Semaphore, an alternating lock class for DualVideoInput
+GenerateTests.cpp	- compiles to GenerateTests, an executable to generate test#_#.avi files
+tests.sh		- runs GenerateTests, which compares the output of 6 tests with expected.out
+expected.out		- correct output for the tests
+
